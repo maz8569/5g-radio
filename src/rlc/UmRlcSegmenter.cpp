@@ -1,16 +1,29 @@
 #include "rlc/UmRlcSegmenter.h"
 
-std::vector<RlcPdu> UmRlcSegmenter::segment(const std::shared_ptr<RlcSdu>& sdu, size_t maxPduSize) const
+std::vector<RlcPdu> UmRlcSegmenter::segment(const std::shared_ptr<RlcSdu>& sdu, 
+    size_t maxSize, 
+    uint32_t& nextSeqNum,
+    size_t startOffset) const
 {
     std::vector<RlcPdu> pdus;
-    size_t offset = 0;
-    uint32_t seqNum = 0;
+    size_t offset = startOffset;
+    const size_t payloadSize = sdu->size();
+    const size_t maxPayload = maxSize - Config::RLC_HEADER_SIZE;
 
-    while (offset < sdu->size())
+    while (offset < payloadSize && maxSize > 0)
     {
-        size_t chunk = std::min(maxPduSize - Config::RLC_HEADER_SIZE, sdu->size() - offset);
-        bool isLast = (offset + chunk >= sdu->size());
-        pdus.emplace_back(seqNum++, sdu->getSduId(), sdu->getBuffer(), offset, chunk, isLast);
+        size_t chunk = std::min(maxPayload, payloadSize - offset);
+        bool isLast = (offset + chunk >= payloadSize);
+
+        pdus.emplace_back(
+            nextSeqNum++,
+            sdu->getSduId(),
+            sdu->getBuffer(),
+            offset,
+            chunk,
+            isLast
+        );
+
         offset += chunk;
     }
 
