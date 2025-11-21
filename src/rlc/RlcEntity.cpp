@@ -52,3 +52,9 @@ std::vector<RlcPdu> RlcEntity::requestPdu(size_t grantSize)
 
 	return pdus;
 }
+
+std::optional<TimePoint> RlcEntity::getHeadSduCreatedAt() const
+{
+	if (_sduBuffer.empty()) return std::nullopt;
+	return _sduBuffer.front().createdAt();
+}

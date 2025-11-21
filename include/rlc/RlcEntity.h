@@ -18,7 +18,8 @@ public:
     uint32_t getLcid() const override { return _lcid; } 
     size_t getPriority() const override { return _priority; } 
 
-    size_t getBufferStatus() const override; 
+    std::optional<TimePoint> getHeadSduCreatedAt() const override;
+    size_t getBufferStatus() const override;
     void enqueueSdu(RlcSdu sdu) override; 
     std::vector<RlcPdu> requestPdu(size_t grantSize) override;
 };

@@ -12,7 +12,7 @@ endif()
 project ("5gradio")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 # Add source to this project's executable.
-add_executable (5gradio   "src/main.cpp" "include/common/Types.h" "include/rlc/RlcSdu.h" "include/rlc/RlcPdu.h" "include/rlc/RlcSduFactory.h" "src/rlc/RlcSduFactory.cpp" "src/rlc/RlcPdu.cpp" "include/rlc/IRlcSegmenter.h" "include/rlc/UmRlcSegmenter.h" "src/rlc/UmRlcSegmenter.cpp" "include/rlc/IRlcEntity.h" "include/rlc/RlcEntity.h" "src/rlc/RlcEntity.cpp")
+add_executable (5gradio   "src/main.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET 5gradio PROPERTY CXX_STANDARD 20)
