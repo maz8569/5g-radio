@@ -15,5 +15,5 @@ public:
 		_logicalChannels.push_back(std::move(rlc));
 	}
 
-	void runTti(int tbSize);
+	std::vector<std::shared_ptr<RlcPdu>> runTti(int tbSize);
 };
